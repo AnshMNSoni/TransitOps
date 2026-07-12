@@ -58,7 +58,7 @@
                 <field name="name"/>
                 <field name="vehicle_id"/>
                 <field name="trip_id"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Vehicle" name="group_vehicle"
                             context="{'group_by': 'vehicle_id'}"/>
                     <filter string="Trip" name="group_trip"

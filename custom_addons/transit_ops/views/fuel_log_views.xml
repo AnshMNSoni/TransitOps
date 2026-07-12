@@ -58,7 +58,7 @@
                 <field name="trip_id"/>
                 <filter string="This Month" name="this_month"
                         domain="[('date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Vehicle" name="group_vehicle"
                             context="{'group_by': 'vehicle_id'}"/>
                     <filter string="Date" name="group_date"
