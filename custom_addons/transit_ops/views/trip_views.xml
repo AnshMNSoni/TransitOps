@@ -38,15 +38,15 @@
             <form string="Trip">
                 <header>
                     <button name="action_dispatch" string="Dispatch" type="object"
-                            class="oe_highlight" states="draft"/>
+                            class="oe_highlight" invisible="state != 'draft'"/>
                     <button name="action_complete" string="Complete" type="object"
-                            class="oe_highlight" states="dispatched"/>
+                            class="oe_highlight" invisible="state != 'dispatched'"/>
                     <button name="%(action_trip_complete_wizard)d" string="Complete Trip" type="action"
-                            class="oe_highlight" states="dispatched"/>
+                            class="oe_highlight" invisible="state != 'dispatched'"/>
                     <button name="action_cancel" string="Cancel" type="object"
-                            states="draft,dispatched"/>
+                            invisible="state not in ('draft', 'dispatched')"/>
                     <button name="action_reset_draft" string="Reset to Draft" type="object"
-                            states="cancelled"/>
+                            invisible="state != 'cancelled'"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,dispatched,completed"/>
                 </header>
                 <sheet>
@@ -102,7 +102,7 @@
                 <filter string="Dispatched" name="dispatched" domain="[('state','=','dispatched')]"/>
                 <filter string="Completed" name="completed" domain="[('state','=','completed')]"/>
                 <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter string="Status" name="group_status" context="{'group_by': 'state'}"/>
                     <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
                     <filter string="Driver" name="group_driver" context="{'group_by': 'driver_id'}"/>
