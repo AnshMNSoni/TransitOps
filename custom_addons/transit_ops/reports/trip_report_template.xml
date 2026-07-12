@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ REPORT ACTION ============ -->
+    <record id="action_report_transit_trip" model="ir.actions.report">
+        <field name="name">Trip Summary</field>
+        <field name="model">transit.trip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">transit_ops.report_transit_trip_document</field>
+        <field name="report_file">transit_ops.report_transit_trip_document</field>
+        <field name="binding_model_id" ref="model_transit_trip"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- ============ TEMPLATE ============ -->
+    <template id="report_transit_trip_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Trip Summary — <span t-field="doc.name"/></h2>
+                        <div class="row mt32">
+                            <div class="col-6">
+                                <strong>Source:</strong> <span t-field="doc.source"/><br/>
+                                <strong>Destination:</strong> <span t-field="doc.destination"/><br/>
+                                <strong>Status:</strong> <span t-field="doc.state"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Vehicle:</strong> <span t-field="doc.vehicle_id"/><br/>
+                                <strong>Driver:</strong> <span t-field="doc.driver_id"/><br/>
+                                <strong>Revenue:</strong> <span t-field="doc.revenue"/>
+                            </div>
+                        </div>
+                        <h3 class="mt32">Trip Metrics</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th class="text-end">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cargo Weight (kg)</td>
+                                    <td class="text-end"><span t-field="doc.cargo_weight"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Planned Distance (km)</td>
+                                    <td class="text-end"><span t-field="doc.planned_distance"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Actual Distance (km)</td>
+                                    <td class="text-end"><span t-field="doc.actual_distance"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Fuel Consumed (L)</td>
+                                    <td class="text-end"><span t-field="doc.fuel_consumed"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Final Odometer (km)</td>
+                                    <td class="text-end"><span t-field="doc.final_odometer"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

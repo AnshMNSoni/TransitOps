@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_fleet_summary" model="ir.actions.report">
+        <field name="name">Fleet Summary</field>
+        <field name="model">transit.vehicle</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">transit_ops.report_fleet_summary_document</field>
+        <field name="report_file">transit_ops.report_fleet_summary_document</field>
+    </record>
+
+    <template id="report_fleet_summary_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1 class="text-center">TransitOps Fleet Summary</h1>
+                    <p class="text-center text-muted">
+                        Generated on <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/>
+                    </p>
+
+                    <t t-set="vehicles" t-value="env['transit.vehicle'].search([])"/>
+                    <t t-set="trips" t-value="env['transit.trip'].search([])"/>
+                    <t t-set="drivers" t-value="env['transit.driver'].search([])"/>
+
+                    <h3 class="mt32">Overall Fleet KPIs</h3>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Total Vehicles</td>
+                                <td class="text-end"><span t-esc="len(vehicles)"/></td>
+                            </tr>
+                            <tr>
+                                <td>Available</td>
+                                <td class="text-end">
+                                    <span t-esc="len(vehicles.filtered(lambda v: v.status == 'available'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>On Trip</td>
+                                <td class="text-end">
+                                    <span t-esc="len(vehicles.filtered(lambda v: v.status == 'on_trip'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>In Shop</td>
+                                <td class="text-end">
+                                    <span t-esc="len(vehicles.filtered(lambda v: v.status == 'in_shop'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total Drivers</td>
+                                <td class="text-end"><span t-esc="len(drivers)"/></td>
+                            </tr>
+                            <tr>
+                                <td>Total Trips</td>
+                                <td class="text-end"><span t-esc="len(trips)"/></td>
+                            </tr>
+                            <tr>
+                                <td>Completed Trips</td>
+                                <td class="text-end">
+                                    <span t-esc="len(trips.filtered(lambda t: t.state == 'completed'))"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="mt32">Vehicle Financial Snapshot</h3>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th class="text-end">Revenue</th>
+                                <th class="text-end">Op Cost</th>
+                                <th class="text-end">ROI (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="vehicles" t-as="v">
+                                <tr>
+                                    <td><span t-field="v.name"/></td>
+                                    <td class="text-end"><span t-field="v.total_revenue"/></td>
+                                    <td class="text-end"><span t-field="v.total_operational_cost"/></td>
+                                    <td class="text-end"><span t-field="v.vehicle_roi"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
