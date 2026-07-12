@@ -1,0 +1,17 @@
+# Database environment variables with credentials
+.env
+
+# Python byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Odoo data and log files
+*.log
+postgres_data/
+odoo_data/
+
+# IDE files
+.vscode/
+.idea/
+.gemini/
