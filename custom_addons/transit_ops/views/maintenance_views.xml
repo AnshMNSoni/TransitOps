@@ -78,7 +78,7 @@
                         domain="[('state', '=', 'active')]"/>
                 <filter string="Completed" name="completed"
                         domain="[('state', '=', 'completed')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Vehicle" name="group_vehicle"
                             context="{'group_by': 'vehicle_id'}"/>
                     <filter string="Service Type" name="group_type"
