@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============ Vehicles ============ -->
+        <record id="demo_vehicle_1" model="transit.vehicle">
+            <field name="name">Van-05</field>
+            <field name="registration_number">GJ-01-AB-1234</field>
+            <field name="vehicle_type">van</field>
+            <field name="max_load_capacity">1500</field>
+            <field name="odometer">45230</field>
+            <field name="acquisition_cost">850000</field>
+            <field name="status">available</field>
+            <field name="region">Ahmedabad</field>
+        </record>
+
+        <record id="demo_vehicle_2" model="transit.vehicle">
+            <field name="name">Truck-11</field>
+            <field name="registration_number">GJ-01-CD-5678</field>
+            <field name="vehicle_type">truck</field>
+            <field name="max_load_capacity">10000</field>
+            <field name="odometer">128900</field>
+            <field name="acquisition_cost">2500000</field>
+            <field name="status">available</field>
+            <field name="region">Surat</field>
+        </record>
+
+        <record id="demo_vehicle_3" model="transit.vehicle">
+            <field name="name">Mini-02</field>
+            <field name="registration_number">GJ-01-EF-9101</field>
+            <field name="vehicle_type">mini</field>
+            <field name="max_load_capacity">750</field>
+            <field name="odometer">22100</field>
+            <field name="acquisition_cost">450000</field>
+            <field name="status">in_shop</field>
+            <field name="region">Vadodara</field>
+        </record>
+
+        <record id="demo_vehicle_4" model="transit.vehicle">
+            <field name="name">Bus-01</field>
+            <field name="registration_number">GJ-01-GH-2233</field>
+            <field name="vehicle_type">bus</field>
+            <field name="max_load_capacity">3000</field>
+            <field name="odometer">89400</field>
+            <field name="acquisition_cost">3200000</field>
+            <field name="status">available</field>
+            <field name="region">Ahmedabad</field>
+        </record>
+
+        <!-- ============ Drivers ============ -->
+        <record id="demo_driver_1" model="transit.driver">
+            <field name="name">Alex Ferreira</field>
+            <field name="license_number">DL-GJ-2020-00123</field>
+            <field name="license_category">HMV</field>
+            <field name="license_expiry" eval="(DateTime.today() + timedelta(days=400)).strftime('%Y-%m-%d')"/>
+            <field name="contact_number">+91-9876543210</field>
+            <field name="safety_score">92.5</field>
+            <field name="status">available</field>
+        </record>
+
+        <record id="demo_driver_2" model="transit.driver">
+            <field name="name">Ramesh Patel</field>
+            <field name="license_number">DL-GJ-2019-04532</field>
+            <field name="license_category">HGMV</field>
+            <field name="license_expiry" eval="(DateTime.today() + timedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="contact_number">+91-9812345678</field>
+            <field name="safety_score">88.0</field>
+            <field name="status">available</field>
+        </record>
+
+        <record id="demo_driver_3" model="transit.driver">
+            <field name="name">Priya Shah</field>
+            <field name="license_number">DL-GJ-2021-01100</field>
+            <field name="license_category">LMV</field>
+            <field name="license_expiry" eval="(DateTime.today() + timedelta(days=800)).strftime('%Y-%m-%d')"/>
+            <field name="contact_number">+91-9765432190</field>
+            <field name="safety_score">96.0</field>
+            <field name="status">off_duty</field>
+        </record>
+
+        <!-- ============ Trips ============ -->
+        <record id="demo_trip_1" model="transit.trip">
+            <field name="source">Ahmedabad</field>
+            <field name="destination">Mumbai</field>
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="driver_id" ref="demo_driver_1"/>
+            <field name="cargo_weight">1200</field>
+            <field name="planned_distance">525</field>
+            <field name="actual_distance">540</field>
+            <field name="final_odometer">45770</field>
+            <field name="fuel_consumed">55</field>
+            <field name="revenue">28000</field>
+            <field name="state">completed</field>
+        </record>
+
+        <record id="demo_trip_2" model="transit.trip">
+            <field name="source">Surat</field>
+            <field name="destination">Delhi</field>
+            <field name="vehicle_id" ref="demo_vehicle_2"/>
+            <field name="driver_id" ref="demo_driver_2"/>
+            <field name="cargo_weight">8500</field>
+            <field name="planned_distance">1150</field>
+            <field name="revenue">92000</field>
+            <field name="state">draft</field>
+        </record>
+
+        <!-- ============ Fuel Logs ============ -->
+        <record id="demo_fuel_1" model="transit.fuel.log">
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="trip_id" ref="demo_trip_1"/>
+            <field name="date" eval="(DateTime.today() - timedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="liters">55</field>
+            <field name="cost_per_liter">98</field>
+        </record>
+
+        <record id="demo_fuel_2" model="transit.fuel.log">
+            <field name="vehicle_id" ref="demo_vehicle_2"/>
+            <field name="date" eval="(DateTime.today() - timedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="liters">180</field>
+            <field name="cost_per_liter">96</field>
+        </record>
+
+        <!-- ============ Maintenance ============ -->
+        <record id="demo_maintenance_1" model="transit.maintenance">
+            <field name="vehicle_id" ref="demo_vehicle_3"/>
+            <field name="service_type">engine_repair</field>
+            <field name="description">Cylinder head gasket replacement.</field>
+            <field name="cost">18500</field>
+            <field name="date" eval="(DateTime.today() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_maintenance_2" model="transit.maintenance">
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="service_type">oil_change</field>
+            <field name="description">Full synthetic oil + filter.</field>
+            <field name="cost">3200</field>
+            <field name="date" eval="(DateTime.today() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="state">completed</field>
+        </record>
+
+        <!-- ============ Expenses ============ -->
+        <record id="demo_expense_1" model="transit.expense">
+            <field name="name">Highway tolls — Mumbai return</field>
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="trip_id" ref="demo_trip_1"/>
+            <field name="toll">850</field>
+            <field name="other">200</field>
+            <field name="date" eval="(DateTime.today() - timedelta(days=5)).strftime('%Y-%m-%d')"/>
+        </record>
+
+    </data>
+</odoo>
