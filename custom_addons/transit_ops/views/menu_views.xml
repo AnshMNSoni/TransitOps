@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ ROOT MENU ============ -->
+    <menuitem id="menu_transit_ops_root"
+              name="TransitOps"
+              sequence="10"
+              web_icon="transit_ops,static/description/icon.png"/>
+
+    <!-- ============ DASHBOARD ============ -->
+    <menuitem id="menu_transit_dashboard"
+              name="Dashboard"
+              parent="menu_transit_ops_root"
+              action="action_transit_dashboard"
+              sequence="10"/>
+
+    <!-- ============ FLEET ============ -->
+    <menuitem id="menu_transit_fleet"
+              name="Fleet"
+              parent="menu_transit_ops_root"
+              action="action_transit_vehicle"
+              sequence="20"/>
+
+    <!-- ============ DRIVERS ============ -->
+    <menuitem id="menu_transit_drivers"
+              name="Drivers"
+              parent="menu_transit_ops_root"
+              action="action_transit_driver"
+              sequence="30"/>
+
+    <!-- ============ TRIPS ============ -->
+    <menuitem id="menu_transit_trips"
+              name="Trips"
+              parent="menu_transit_ops_root"
+              action="action_transit_trip"
+              sequence="40"/>
+
+    <!-- ============ MAINTENANCE ============ -->
+    <menuitem id="menu_transit_maintenance"
+              name="Maintenance"
+              parent="menu_transit_ops_root"
+              action="action_transit_maintenance"
+              sequence="50"/>
+
+    <!-- ============ FUEL & EXPENSES (parent) ============ -->
+    <menuitem id="menu_transit_finance"
+              name="Fuel &amp; Expenses"
+              parent="menu_transit_ops_root"
+              sequence="60"/>
+
+    <menuitem id="menu_transit_fuel_log"
+              name="Fuel Logs"
+              parent="menu_transit_finance"
+              action="action_transit_fuel_log"
+              sequence="10"/>
+
+    <menuitem id="menu_transit_expense"
+              name="Other Expenses"
+              parent="menu_transit_finance"
+              action="action_transit_expense"
+              sequence="20"/>
+
+    <!-- ============ ANALYTICS (parent) ============ -->
+    <menuitem id="menu_transit_analytics"
+              name="Analytics"
+              parent="menu_transit_ops_root"
+              sequence="70"/>
+
+    <menuitem id="menu_transit_analytics_vehicle_performance"
+              name="Vehicle Performance"
+              parent="menu_transit_analytics"
+              action="action_transit_analytics_vehicle_performance"
+              sequence="10"/>
+
+    <menuitem id="menu_transit_analytics_fuel_efficiency"
+              name="Fuel Efficiency"
+              parent="menu_transit_analytics"
+              action="action_transit_analytics_fuel_efficiency"
+              sequence="20"/>
+
+    <menuitem id="menu_transit_analytics_revenue"
+              name="Monthly Revenue"
+              parent="menu_transit_analytics"
+              action="action_transit_analytics_revenue"
+              sequence="30"/>
+
+    <!-- ============ SETTINGS ============ -->
+    <menuitem id="menu_transit_settings"
+              name="Settings"
+              parent="menu_transit_ops_root"
+              action="action_transit_config_settings"
+              sequence="99"/>
+
+</odoo>

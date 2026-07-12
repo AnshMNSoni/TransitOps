@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ VEHICLE PERFORMANCE ============ -->
+    <record id="view_transit_vehicle_analytics_graph" model="ir.ui.view">
+        <field name="name">transit.vehicle.analytics.graph</field>
+        <field name="model">transit.vehicle</field>
+        <field name="arch" type="xml">
+            <graph string="Vehicle Performance" type="bar">
+                <field name="name"/>
+                <field name="total_operational_cost" type="measure"/>
+                <field name="total_revenue" type="measure"/>
+                <field name="vehicle_roi" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_transit_vehicle_analytics_pivot" model="ir.ui.view">
+        <field name="name">transit.vehicle.analytics.pivot</field>
+        <field name="model">transit.vehicle</field>
+        <field name="arch" type="xml">
+            <pivot string="Vehicle Performance">
+                <field name="name" type="row"/>
+                <field name="total_fuel_cost" type="measure"/>
+                <field name="total_maintenance_cost" type="measure"/>
+                <field name="total_operational_cost" type="measure"/>
+                <field name="total_revenue" type="measure"/>
+                <field name="vehicle_roi" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_transit_analytics_vehicle_performance" model="ir.actions.act_window">
+        <field name="name">Vehicle Performance</field>
+        <field name="res_model">transit.vehicle</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+    </record>
+
+    <!-- ============ FUEL EFFICIENCY ============ -->
+    <record id="view_transit_fuel_efficiency_graph" model="ir.ui.view">
+        <field name="name">transit.fuel.efficiency.graph</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <graph string="Fuel Efficiency by Trip" type="line">
+                <field name="name"/>
+                <field name="actual_distance" type="measure"/>
+                <field name="fuel_consumed" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_transit_fuel_efficiency_pivot" model="ir.ui.view">
+        <field name="name">transit.fuel.efficiency.pivot</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <pivot string="Fuel Efficiency">
+                <field name="vehicle_id" type="row"/>
+                <field name="actual_distance" type="measure"/>
+                <field name="fuel_consumed" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_transit_analytics_fuel_efficiency" model="ir.actions.act_window">
+        <field name="name">Fuel Efficiency</field>
+        <field name="res_model">transit.trip</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="domain">[('state', '=', 'completed')]</field>
+    </record>
+
+    <!-- ============ MONTHLY REVENUE ============ -->
+    <record id="view_transit_revenue_graph" model="ir.ui.view">
+        <field name="name">transit.revenue.graph</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <graph string="Revenue by Month" type="bar">
+                <field name="create_date" interval="month"/>
+                <field name="revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_transit_revenue_pivot" model="ir.ui.view">
+        <field name="name">transit.revenue.pivot</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <pivot string="Monthly Revenue">
+                <field name="create_date" interval="month" type="col"/>
+                <field name="vehicle_id" type="row"/>
+                <field name="revenue" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_transit_analytics_revenue" model="ir.actions.act_window">
+        <field name="name">Monthly Revenue</field>
+        <field name="res_model">transit.trip</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="domain">[('state', '=', 'completed')]</field>
+    </record>
+
+</odoo>

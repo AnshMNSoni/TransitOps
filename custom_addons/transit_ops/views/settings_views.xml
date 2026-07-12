@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="transit_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.transit_ops</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="TransitOps" string="TransitOps" name="transit_ops">
+                    <block title="Depot Settings" name="depot_settings">
+                        <setting id="depot_name_setting" string="Depot Name"
+                                 help="Name of your operating depot.">
+                            <field name="depot_name"/>
+                        </setting>
+                        <setting id="currency_setting" string="Currency"
+                                 help="Default currency for costs and revenue.">
+                            <field name="currency_id"/>
+                        </setting>
+                        <setting id="distance_unit_setting" string="Distance Unit"
+                                 help="Choose kilometers or miles.">
+                            <field name="distance_unit"/>
+                        </setting>
+                    </block>
+                    <block title="Role-Based Access Matrix" name="rbac_matrix">
+                        <div class="text-muted">
+                            <p><strong>Fleet Manager:</strong> Full access to vehicles, maintenance, and analytics.</p>
+                            <p><strong>Dispatcher:</strong> Write access to trips; view vehicles and drivers.</p>
+                            <p><strong>Safety Officer:</strong> Full access to drivers; view-only trips.</p>
+                            <p><strong>Financial Analyst:</strong> View vehicles; write access to expenses and fuel logs.</p>
+                        </div>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_transit_config_settings" model="ir.actions.act_window">
+        <field name="name">TransitOps Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'transit_ops'}</field>
+    </record>
+
+</odoo>
