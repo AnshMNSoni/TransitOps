@@ -141,6 +141,27 @@ flowchart TD
     UnlockStatus --> Finish([Operational Metrics & ROI Updated])
 ```
 
+## Preview
+### 1. Fleet Operations Dashboard
+<img width="1745" height="955" alt="image" src="https://github.com/user-attachments/assets/0889aec2-43cd-4a7e-b636-53058c460d54" />
+
+### 2. Smart Trip Dispatch Form
+<img width="1745" height="950" alt="image" src="https://github.com/user-attachments/assets/fa62e3e3-2843-4cff-a043-ca112807c2ee" />
+
+### 3. Trip Wizard
+<img width="1752" height="941" alt="image" src="https://github.com/user-attachments/assets/59d8b90e-14d2-4c4f-8a26-960fb33fb778" />
+
+### 4. Active Maintenance Pool Lock
+<img width="1745" height="727" alt="image" src="https://github.com/user-attachments/assets/978aabeb-24c7-451d-b62b-6a823d7ebb2f" />
+
+### 5. Real-Time Analytics & ROI Charts
+<img width="1752" height="955" alt="image" src="https://github.com/user-attachments/assets/faccb6bf-f2e1-4d31-bdd1-7c34d34a37a8" />
+<br><br>
+<img width="1745" height="968" alt="image" src="https://github.com/user-attachments/assets/3b2bddd2-67ff-4ea8-aafb-ed09ba0ddd5d" />
+
+### 6. Role-Based Access Control navbar comparisons
+<img width="1762" height="802" alt="image" src="https://github.com/user-attachments/assets/1674f818-848c-45e8-81f5-d6843b5ab35d" />
+
 ---
 
 ## Role-Based Access Control (RBAC) & Test Accounts
