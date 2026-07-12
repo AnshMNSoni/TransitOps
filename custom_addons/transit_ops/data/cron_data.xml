@@ -7,7 +7,7 @@
             <field name="model_id" ref="model_transit_driver"/>
             <field name="state">code</field>
             <field name="code">
-today = fields.Date.context_today(model)
+today = datetime.date.today()
 cutoff = today + datetime.timedelta(days=30)
 expiring = model.search([
     ('license_expiry', '!=', False),

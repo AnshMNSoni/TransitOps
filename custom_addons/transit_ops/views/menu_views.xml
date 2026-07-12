@@ -11,7 +11,8 @@
     <menuitem id="menu_transit_dashboard"
               name="Dashboard"
               parent="menu_transit_ops_root"
-              action="action_transit_dashboard"
+              action="action_transit_dashboard_server"
+              groups="transit_ops.group_transit_fleet_manager,transit_ops.group_transit_dispatcher,transit_ops.group_transit_safety_officer,transit_ops.group_transit_financial_analyst"
               sequence="10"/>
 
     <!-- ============ FLEET ============ -->
@@ -19,6 +20,7 @@
               name="Fleet"
               parent="menu_transit_ops_root"
               action="action_transit_vehicle"
+              groups="transit_ops.group_transit_fleet_manager,transit_ops.group_transit_dispatcher,transit_ops.group_transit_financial_analyst"
               sequence="20"/>
 
     <!-- ============ DRIVERS ============ -->
@@ -26,6 +28,7 @@
               name="Drivers"
               parent="menu_transit_ops_root"
               action="action_transit_driver"
+              groups="transit_ops.group_transit_safety_officer,transit_ops.group_transit_dispatcher"
               sequence="30"/>
 
     <!-- ============ TRIPS ============ -->
@@ -33,6 +36,7 @@
               name="Trips"
               parent="menu_transit_ops_root"
               action="action_transit_trip"
+              groups="transit_ops.group_transit_dispatcher,transit_ops.group_transit_safety_officer"
               sequence="40"/>
 
     <!-- ============ MAINTENANCE ============ -->
@@ -40,48 +44,56 @@
               name="Maintenance"
               parent="menu_transit_ops_root"
               action="action_transit_maintenance"
+              groups="transit_ops.group_transit_fleet_manager"
               sequence="50"/>
 
     <!-- ============ FUEL & EXPENSES (parent) ============ -->
     <menuitem id="menu_transit_finance"
               name="Fuel &amp; Expenses"
               parent="menu_transit_ops_root"
+              groups="transit_ops.group_transit_financial_analyst"
               sequence="60"/>
 
     <menuitem id="menu_transit_fuel_log"
               name="Fuel Logs"
               parent="menu_transit_finance"
               action="action_transit_fuel_log"
+              groups="transit_ops.group_transit_financial_analyst"
               sequence="10"/>
 
     <menuitem id="menu_transit_expense"
               name="Other Expenses"
               parent="menu_transit_finance"
               action="action_transit_expense"
+              groups="transit_ops.group_transit_financial_analyst"
               sequence="20"/>
 
     <!-- ============ ANALYTICS (parent) ============ -->
     <menuitem id="menu_transit_analytics"
               name="Analytics"
               parent="menu_transit_ops_root"
+              groups="transit_ops.group_transit_fleet_manager,transit_ops.group_transit_financial_analyst"
               sequence="70"/>
 
     <menuitem id="menu_transit_analytics_vehicle_performance"
               name="Vehicle Performance"
               parent="menu_transit_analytics"
               action="action_transit_analytics_vehicle_performance"
+              groups="transit_ops.group_transit_fleet_manager"
               sequence="10"/>
 
     <menuitem id="menu_transit_analytics_fuel_efficiency"
               name="Fuel Efficiency"
               parent="menu_transit_analytics"
               action="action_transit_analytics_fuel_efficiency"
+              groups="transit_ops.group_transit_financial_analyst,transit_ops.group_transit_fleet_manager"
               sequence="20"/>
 
     <menuitem id="menu_transit_analytics_revenue"
               name="Monthly Revenue"
               parent="menu_transit_analytics"
               action="action_transit_analytics_revenue"
+              groups="transit_ops.group_transit_financial_analyst,transit_ops.group_transit_fleet_manager"
               sequence="30"/>
 
     <!-- ============ SETTINGS ============ -->
@@ -89,6 +101,7 @@
               name="Settings"
               parent="menu_transit_ops_root"
               action="action_transit_config_settings"
+              groups="transit_ops.group_transit_fleet_manager"
               sequence="99"/>
 
 </odoo>

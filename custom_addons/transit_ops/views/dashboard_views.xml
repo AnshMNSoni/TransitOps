@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ============ VEHICLE STATUS GRAPH (used on dashboard) ============ -->
+    <!-- ============ VEHICLE STATUS GRAPH ============ -->
     <record id="view_transit_vehicle_graph_status" model="ir.ui.view">
         <field name="name">transit.vehicle.graph.status</field>
         <field name="model">transit.vehicle</field>
@@ -12,47 +12,99 @@
         </field>
     </record>
 
-    <!-- ============ RECENT TRIPS LIST (dashboard sub-view) ============ -->
-    <record id="view_transit_trip_dashboard_list" model="ir.ui.view">
-        <field name="name">transit.trip.dashboard.list</field>
-        <field name="model">transit.trip</field>
+    <!-- ============ DASHBOARD FORM VIEW ============ -->
+    <record id="view_transit_dashboard_form" model="ir.ui.view">
+        <field name="name">transit.dashboard.form</field>
+        <field name="model">transit.dashboard</field>
         <field name="arch" type="xml">
-            <list string="Recent Trips" limit="10" create="false">
-                <field name="name"/>
-                <field name="vehicle_id"/>
-                <field name="driver_id"/>
-                <field name="source"/>
-                <field name="destination"/>
-                <field name="state" widget="badge"
-                       decoration-muted="state == 'draft'"
-                       decoration-info="state == 'dispatched'"
-                       decoration-success="state == 'completed'"
-                       decoration-danger="state == 'cancelled'"/>
-            </list>
+            <form string="Dashboard" create="0" edit="0" delete="0">
+                <sheet>
+                    <!-- Header Title -->
+                    <div class="text-center my-3">
+                        <h1 class="display-5 fw-bold text-primary">TransitOps Fleet Dashboard</h1>
+                        <p class="text-muted">Real-time KPIs and fleet operations summary</p>
+                    </div>
+
+                    <!-- Row 1: Key Metrics -->
+                    <div class="row g-4 mb-4">
+                        <!-- Fleet Utilization Card (Large) -->
+                        <div class="col-12 col-md-4" groups="transit_ops.group_transit_fleet_manager,transit_ops.group_transit_dispatcher,transit_ops.group_transit_financial_analyst">
+                            <div class="card border-0 shadow-sm text-center bg-primary text-white h-100" style="border-radius: 12px;">
+                                <div class="card-body d-flex flex-column justify-content-center p-4">
+                                    <h5 class="text-white-50 text-uppercase fw-semibold mb-2">Fleet Utilization</h5>
+                                    <div class="my-2">
+                                        <span class="display-3 fw-bold"><field name="fleet_utilization"/></span>
+                                        <span class="display-6 fw-bold">%</span>
+                                    </div>
+                                    <p class="small mb-0 text-white-50">Active vehicles vs total active fleet capacity</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vehicles Summary Card -->
+                        <div class="col-12 col-sm-6 col-md-4" groups="transit_ops.group_transit_fleet_manager,transit_ops.group_transit_dispatcher,transit_ops.group_transit_financial_analyst">
+                            <div class="card border-0 shadow-sm h-100 bg-light" style="border-radius: 12px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="text-muted text-uppercase fw-semibold mb-0">Vehicle Fleet</h5>
+                                        <span class="badge bg-secondary rounded-pill"><field name="total_vehicles"/> Total</span>
+                                    </div>
+                                    <div class="list-group list-group-flush bg-transparent">
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-bottom">
+                                            <span class="text-success"><i class="fa fa-check-circle me-2"/>Available</span>
+                                            <span class="fw-bold fs-5 text-success"><field name="available_vehicles"/></span>
+                                        </div>
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-bottom">
+                                            <span class="text-warning"><i class="fa fa-truck me-2"/>On Trip</span>
+                                            <span class="fw-bold fs-5 text-warning"><field name="ontrip_vehicles"/></span>
+                                        </div>
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-0">
+                                            <span class="text-danger"><i class="fa fa-wrench me-2"/>In Shop (Maintenance)</span>
+                                            <span class="fw-bold fs-5 text-danger"><field name="maintenance_vehicles"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Operations Summary Card -->
+                        <div class="col-12 col-sm-6 col-md-4" groups="transit_ops.group_transit_dispatcher,transit_ops.group_transit_safety_officer">
+                            <div class="card border-0 shadow-sm h-100 bg-light" style="border-radius: 12px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="text-muted text-uppercase fw-semibold mb-0">Operations</h5>
+                                        <span class="badge bg-secondary rounded-pill"><field name="total_drivers"/> Drivers</span>
+                                    </div>
+                                    <div class="list-group list-group-flush bg-transparent">
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-bottom">
+                                            <span class="text-warning"><i class="fa fa-road me-2"/>Active Trips</span>
+                                            <span class="fw-bold fs-5 text-warning"><field name="active_trips"/></span>
+                                        </div>
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-bottom">
+                                            <span class="text-muted"><i class="fa fa-clock-o me-2"/>Pending Trips</span>
+                                            <span class="fw-bold fs-5 text-dark"><field name="pending_trips"/></span>
+                                        </div>
+                                        <div class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 py-2 border-0">
+                                            <span class="text-success"><i class="fa fa-user me-2"/>Drivers On Duty</span>
+                                            <span class="fw-bold fs-5 text-success"><field name="drivers_on_duty"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
         </field>
     </record>
 
-    <!-- ============ DASHBOARD ACTION ============ -->
-    <!-- Main dashboard opens the vehicle graph as landing view; users navigate from menu. -->
-    <record id="action_transit_dashboard" model="ir.actions.act_window">
+    <!-- ============ DASHBOARD ACTION (SERVER ACTION) ============ -->
+    <record id="action_transit_dashboard_server" model="ir.actions.server">
         <field name="name">Dashboard</field>
-        <field name="res_model">transit.vehicle</field>
-        <field name="view_mode">graph,list,kanban,form</field>
-        <field name="view_id" ref="view_transit_vehicle_graph_status"/>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Welcome to TransitOps
-            </p>
-            <p>Register vehicles and drivers to start operating your fleet.</p>
-            <div style="margin-top: 30px;">
-                <h3>Key Performance Indicators</h3>
-                <ul>
-                    <li><strong>Available Vehicles</strong> — ready for dispatch</li>
-                    <li><strong>On Trip</strong> — currently active</li>
-                    <li><strong>In Shop</strong> — under maintenance</li>
-                    <li><strong>Retired</strong> — no longer operational</li>
-                </ul>
-            </div>
+        <field name="model_id" ref="model_transit_dashboard"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.get_dashboard_action()
         </field>
     </record>
 
