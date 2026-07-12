@@ -12,35 +12,39 @@
     'depends': ['base', 'mail', 'web'],
     'data': [
         # Security
-        # 'security/transit_security.xml',
-        # 'security/ir.model.access.csv',
+        'security/transit_security.xml',
+        'security/ir.model.access.csv',
 
         # Data
         'data/sequence_data.xml',
-        # 'data/cron_data.xml',
-        # 'data/mail_template_data.xml',
-        # 'data/demo_data.xml',
+        'data/ops_sequences.xml',
+        'data/cron_data.xml',
+        'data/mail_template_data.xml',
 
         # Wizards
         'wizards/trip_complete_wizard_views.xml',
 
         # Reports
-        # 'reports/trip_report_template.xml',
-        # 'reports/vehicle_report_template.xml',
-        # 'reports/fleet_summary_report.xml',
+        'reports/trip_report_template.xml',
+        'reports/vehicle_report_template.xml',
+        'reports/fleet_summary_report.xml',
 
         # Views
         'views/vehicle_views.xml',
         'views/driver_views.xml',
         'views/trip_views.xml',
-        # 'views/maintenance_views.xml',
-        # 'views/fuel_log_views.xml',
-        # 'views/expense_views.xml',
-        # 'views/settings_views.xml',
-        # 'views/dashboard_views.xml',
-        # 'views/analytics_views.xml',
-        # 'views/menu_views.xml',
+        'views/maintenance_views.xml',
+        'views/fuel_log_views.xml',
+        'views/expense_views.xml',
+        'views/settings_views.xml',
+        'views/dashboard_views.xml',
+        'views/analytics_views.xml',
+        'views/menu_views.xml',
+    ],
+    'demo': [
+        'data/demo_data.xml',
     ],
     'installable': True,
     'application': True,
+    'license': 'LGPL-3',
 }
