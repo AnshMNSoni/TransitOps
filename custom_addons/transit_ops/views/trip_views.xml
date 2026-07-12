@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ TRIP TREE VIEW ============ -->
+    <record id="transit_trip_view_tree" model="ir.ui.view">
+        <field name="name">transit.trip.tree</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <list string="Trips"
+                  decoration-success="state == 'completed'"
+                  decoration-warning="state == 'dispatched'"
+                  decoration-danger="state == 'cancelled'"
+                  decoration-muted="state == 'draft'">
+                <field name="name"/>
+                <field name="source"/>
+                <field name="destination"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="cargo_weight"/>
+                <field name="planned_distance"/>
+                <field name="actual_distance"/>
+                <field name="revenue" widget="monetary"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"
+                       decoration-warning="state == 'dispatched'"
+                       decoration-danger="state == 'cancelled'"
+                       decoration-muted="state == 'draft'"/>
+                <field name="create_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============ TRIP FORM VIEW ============ -->
+    <record id="transit_trip_view_form" model="ir.ui.view">
+        <field name="name">transit.trip.form</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <form string="Trip">
+                <header>
+                    <button name="action_dispatch" string="Dispatch" type="object"
+                            class="oe_highlight" states="draft"/>
+                    <button name="action_complete" string="Complete" type="object"
+                            class="oe_highlight" states="dispatched"/>
+                    <button name="%(action_trip_complete_wizard)d" string="Complete Trip" type="action"
+                            class="oe_highlight" states="dispatched"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            states="draft,dispatched"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object"
+                            states="cancelled"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,dispatched,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Trip Reference"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Route">
+                            <field name="source"/>
+                            <field name="destination"/>
+                            <field name="planned_distance"/>
+                            <field name="actual_distance"/>
+                        </group>
+                        <group string="Assignment">
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Cargo">
+                            <field name="cargo_weight"/>
+                        </group>
+                        <group string="Financials">
+                            <field name="revenue"/>
+                            <field name="fuel_consumed"/>
+                            <field name="final_odometer"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============ TRIP SEARCH VIEW ============ -->
+    <record id="transit_trip_view_search" model="ir.ui.view">
+        <field name="name">transit.trip.search</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <search string="Search Trips">
+                <field name="name"/>
+                <field name="source"/>
+                <field name="destination"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Dispatched" name="dispatched" domain="[('state','=','dispatched')]"/>
+                <filter string="Completed" name="completed" domain="[('state','=','completed')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_status" context="{'group_by': 'state'}"/>
+                    <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <filter string="Driver" name="group_driver" context="{'group_by': 'driver_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============ TRIP ACTION ============ -->
+    <record id="action_transit_trip" model="ir.actions.act_window">
+        <field name="name">Trips</field>
+        <field name="res_model">transit.trip</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="transit_trip_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No trips created yet!
+            </p>
+            <p>Create a new trip to dispatch a vehicle and driver.</p>
+        </field>
+    </record>
+
+</odoo>
