@@ -28,37 +28,35 @@ class TransitVehicle(models.Model):
     region = fields.Char(string='Region', tracking=True)
     image_1920 = fields.Image(string='Vehicle Image', max_width=1920, max_height=1920)
     trip_ids = fields.One2many('transit.trip', 'vehicle_id', string='Trips')
+    fuel_log_ids = fields.One2many('transit.fuel.log', 'vehicle_id', string='Fuel Logs')
+    maintenance_ids = fields.One2many('transit.maintenance', 'vehicle_id', string='Maintenance Logs')
 
     total_fuel_cost = fields.Float(string='Total Fuel Cost', compute='_compute_fuel_costs', store=True)
     total_maintenance_cost = fields.Float(string='Total Maintenance Cost', compute='_compute_maint_costs', store=True)
     total_operational_cost = fields.Float(string='Total Operational Cost', compute='_compute_op_costs', store=True)
     total_revenue = fields.Float(string='Total Revenue', compute='_compute_revenue', store=True)
-    vehicle_roi = fields.Float(string='Vehicle ROI (%)', compute='_compute_roi')
-    fuel_efficiency = fields.Float(string='Fuel Efficiency (km/L)', compute='_compute_fuel_eff')
+    vehicle_roi = fields.Float(string='Vehicle ROI (%)', compute='_compute_roi', store=True, aggregator='avg')
+    fuel_efficiency = fields.Float(string='Fuel Efficiency (km/L)', compute='_compute_fuel_eff', store=True, aggregator='avg')
 
     _reg_unique = models.Constraint('unique(registration_number)', 'The registration number must be unique!')
 
-    @api.depends('trip_ids.fuel_consumed', 'trip_ids.fuel_consumed')
+    @api.depends('fuel_log_ids.total_cost')
     def _compute_fuel_costs(self):
         for rec in self:
-            fuel_logs = self.env['transit.fuel.log'].search([('vehicle_id', '=', rec.id)])
-            rec.total_fuel_cost = sum(fuel_logs.mapped('total_cost'))
+            rec.total_fuel_cost = sum(rec.fuel_log_ids.mapped('total_cost'))
 
-    @api.depends('trip_ids')
+    @api.depends('maintenance_ids.cost', 'maintenance_ids.state')
     def _compute_maint_costs(self):
         for rec in self:
-            maint_records = self.env['transit.maintenance'].search([
-                ('vehicle_id', '=', rec.id),
-                ('state', '=', 'completed'),
-            ])
-            rec.total_maintenance_cost = sum(maint_records.mapped('cost'))
+            completed_maint = rec.maintenance_ids.filtered(lambda m: m.state == 'completed')
+            rec.total_maintenance_cost = sum(completed_maint.mapped('cost'))
 
     @api.depends('total_fuel_cost', 'total_maintenance_cost')
     def _compute_op_costs(self):
         for rec in self:
             rec.total_operational_cost = rec.total_fuel_cost + rec.total_maintenance_cost
 
-    @api.depends('trip_ids.revenue')
+    @api.depends('trip_ids.revenue', 'trip_ids.state')
     def _compute_revenue(self):
         for rec in self:
             completed_trips = rec.trip_ids.filtered(lambda t: t.state == 'completed')
@@ -72,7 +70,7 @@ class TransitVehicle(models.Model):
             else:
                 rec.vehicle_roi = 0.0
 
-    @api.depends('trip_ids.actual_distance', 'trip_ids.fuel_consumed')
+    @api.depends('trip_ids.actual_distance', 'trip_ids.fuel_consumed', 'trip_ids.state')
     def _compute_fuel_eff(self):
         for rec in self:
             completed_trips = rec.trip_ids.filtered(lambda t: t.state == 'completed')

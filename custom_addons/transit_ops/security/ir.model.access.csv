@@ -25,3 +25,8 @@ access_transit_expense_safety,transit.expense.safety,model_transit_expense,group
 access_transit_expense_finance,transit.expense.finance,model_transit_expense,group_transit_financial_analyst,1,1,1,1
 access_transit_trip_complete_wizard,transit.trip.complete.wizard.all,model_transit_trip_complete_wizard,group_transit_dispatcher,1,1,1,1
 access_transit_trip_complete_wizard_mgr,transit.trip.complete.wizard.mgr,model_transit_trip_complete_wizard,group_transit_fleet_manager,1,1,1,1
+access_transit_dashboard_fleet_mgr,transit.dashboard.fleet.manager,model_transit_dashboard,group_transit_fleet_manager,1,1,1,1
+access_transit_dashboard_dispatcher,transit.dashboard.dispatcher,model_transit_dashboard,group_transit_dispatcher,1,1,1,1
+access_transit_dashboard_safety,transit.dashboard.safety,model_transit_dashboard,group_transit_safety_officer,1,1,1,1
+access_transit_dashboard_finance,transit.dashboard.finance,model_transit_dashboard,group_transit_financial_analyst,1,1,1,1
+
