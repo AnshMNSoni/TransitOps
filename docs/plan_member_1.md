@@ -1,4 +1,4 @@
-# TransitOps — Implementation Plan for Person A (Core Models & Trip Engine)
+# transit_ops — Implementation Plan for Person A (Core Models & Trip Engine)
 
 You are responsible for creating the foundation of the Odoo 19 module: Core Models, Trip Workflow, and Validation checks. 
 To avoid Git/merge conflicts, you will work **exclusively** on your set of files.
@@ -7,19 +7,19 @@ To avoid Git/merge conflicts, you will work **exclusively** on your set of files
 
 ## 📂 Your Dedicated Files
 Do not modify files assigned to Person B or Person C.
-* `custom_addons/TransitOps/__manifest__.py` (You will create the initial file, then merge changes from others during sync)
-* `custom_addons/TransitOps/__init__.py`
-* `custom_addons/TransitOps/models/__init__.py`
-* `custom_addons/TransitOps/models/transit_vehicle.py`
-* `custom_addons/TransitOps/models/transit_driver.py`
-* `custom_addons/TransitOps/models/transit_trip.py`
-* `custom_addons/TransitOps/wizards/__init__.py`
-* `custom_addons/TransitOps/wizards/trip_complete_wizard.py`
-* `custom_addons/TransitOps/wizards/trip_complete_wizard_views.xml`
-* `custom_addons/TransitOps/views/vehicle_views.xml`
-* `custom_addons/TransitOps/views/driver_views.xml`
-* `custom_addons/TransitOps/views/trip_views.xml`
-* `custom_addons/TransitOps/data/sequence_data.xml`
+* `custom_addons/transit_ops/__manifest__.py` (You will create the initial file, then merge changes from others during sync)
+* `custom_addons/transit_ops/__init__.py`
+* `custom_addons/transit_ops/models/__init__.py`
+* `custom_addons/transit_ops/models/transit_vehicle.py`
+* `custom_addons/transit_ops/models/transit_driver.py`
+* `custom_addons/transit_ops/models/transit_trip.py`
+* `custom_addons/transit_ops/wizards/__init__.py`
+* `custom_addons/transit_ops/wizards/trip_complete_wizard.py`
+* `custom_addons/transit_ops/wizards/trip_complete_wizard_views.xml`
+* `custom_addons/transit_ops/views/vehicle_views.xml`
+* `custom_addons/transit_ops/views/driver_views.xml`
+* `custom_addons/transit_ops/views/trip_views.xml`
+* `custom_addons/transit_ops/data/sequence_data.xml`
 
 ---
 
@@ -28,7 +28,7 @@ Do not modify files assigned to Person B or Person C.
 ### Step 1: Module Initial Scaffolding
 Create the directory structure:
 ```
-TransitOps/
+transit_ops/
 ├── __manifest__.py
 ├── __init__.py
 ├── models/
@@ -51,7 +51,7 @@ TransitOps/
 In `__manifest__.py`:
 ```python
 {
-    'name': 'TransitOps',
+    'name': 'transit_ops',
     'version': '19.0.1.0.0',
     'summary': 'Smart Transport Operations Platform',
     'depends': ['base', 'mail', 'web'],
