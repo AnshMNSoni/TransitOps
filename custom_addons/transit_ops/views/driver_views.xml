@@ -82,7 +82,7 @@
                 <filter string="On Trip" name="on_trip" domain="[('status','=','on_trip')]"/>
                 <filter string="License Expired" name="expired" domain="[('is_license_expired','=',True)]"/>
                 <filter string="Suspended" name="suspended" domain="[('status','=','suspended')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
                     <filter string="License Category" name="group_category" context="{'group_by': 'license_category'}"/>
                 </group>

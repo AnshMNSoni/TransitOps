@@ -26,9 +26,7 @@ class TransitDriver(models.Model):
     image_1920 = fields.Image(string='Driver Photo', max_width=1920, max_height=1920)
     is_license_expired = fields.Boolean(string='License Expired', compute='_compute_license_expired', store=True)
 
-    _sql_constraints = [
-        ('license_unique', 'unique(license_number)', 'The license number must be unique!')
-    ]
+    _license_unique = models.Constraint('unique(license_number)', 'The license number must be unique!')
 
     @api.depends('license_expiry')
     def _compute_license_expired(self):

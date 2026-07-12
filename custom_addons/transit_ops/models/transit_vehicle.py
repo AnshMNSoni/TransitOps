@@ -36,9 +36,7 @@ class TransitVehicle(models.Model):
     vehicle_roi = fields.Float(string='Vehicle ROI (%)', compute='_compute_roi')
     fuel_efficiency = fields.Float(string='Fuel Efficiency (km/L)', compute='_compute_fuel_eff')
 
-    _sql_constraints = [
-        ('reg_unique', 'unique(registration_number)', 'The registration number must be unique!')
-    ]
+    _reg_unique = models.Constraint('unique(registration_number)', 'The registration number must be unique!')
 
     @api.depends('trip_ids.fuel_consumed', 'trip_ids.fuel_consumed')
     def _compute_fuel_costs(self):

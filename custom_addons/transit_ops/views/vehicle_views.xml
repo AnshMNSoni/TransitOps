@@ -100,7 +100,7 @@
                 <filter string="Available" name="available" domain="[('status','=','available')]"/>
                 <filter string="On Trip" name="on_trip" domain="[('status','=','on_trip')]"/>
                 <filter string="In Shop" name="in_shop" domain="[('status','=','in_shop')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
                     <filter string="Vehicle Type" name="group_type" context="{'group_by': 'vehicle_type'}"/>
                     <filter string="Region" name="group_region" context="{'group_by': 'region'}"/>
