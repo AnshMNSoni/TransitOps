@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ VEHICLE STATUS GRAPH (used on dashboard) ============ -->
+    <record id="view_transit_vehicle_graph_status" model="ir.ui.view">
+        <field name="name">transit.vehicle.graph.status</field>
+        <field name="model">transit.vehicle</field>
+        <field name="arch" type="xml">
+            <graph string="Vehicle Status Distribution" type="pie">
+                <field name="status"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ============ RECENT TRIPS LIST (dashboard sub-view) ============ -->
+    <record id="view_transit_trip_dashboard_list" model="ir.ui.view">
+        <field name="name">transit.trip.dashboard.list</field>
+        <field name="model">transit.trip</field>
+        <field name="arch" type="xml">
+            <list string="Recent Trips" limit="10" create="false">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="source"/>
+                <field name="destination"/>
+                <field name="state" widget="badge"
+                       decoration-muted="state == 'draft'"
+                       decoration-info="state == 'dispatched'"
+                       decoration-success="state == 'completed'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============ DASHBOARD ACTION ============ -->
+    <!-- Main dashboard opens the vehicle graph as landing view; users navigate from menu. -->
+    <record id="action_transit_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">transit.vehicle</field>
+        <field name="view_mode">graph,list,kanban,form</field>
+        <field name="view_id" ref="view_transit_vehicle_graph_status"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Welcome to TransitOps
+            </p>
+            <p>Register vehicles and drivers to start operating your fleet.</p>
+            <div style="margin-top: 30px;">
+                <h3>Key Performance Indicators</h3>
+                <ul>
+                    <li><strong>Available Vehicles</strong> — ready for dispatch</li>
+                    <li><strong>On Trip</strong> — currently active</li>
+                    <li><strong>In Shop</strong> — under maintenance</li>
+                    <li><strong>Retired</strong> — no longer operational</li>
+                </ul>
+            </div>
+        </field>
+    </record>
+
+    <!-- ============ QUICK-ACCESS ACTIONS FOR DASHBOARD KPI CARDS ============ -->
+    <record id="action_dashboard_available_vehicles" model="ir.actions.act_window">
+        <field name="name">Available Vehicles</field>
+        <field name="res_model">transit.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('status', '=', 'available')]</field>
+    </record>
+
+    <record id="action_dashboard_on_trip_vehicles" model="ir.actions.act_window">
+        <field name="name">Vehicles On Trip</field>
+        <field name="res_model">transit.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('status', '=', 'on_trip')]</field>
+    </record>
+
+    <record id="action_dashboard_in_shop_vehicles" model="ir.actions.act_window">
+        <field name="name">Vehicles In Shop</field>
+        <field name="res_model">transit.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('status', '=', 'in_shop')]</field>
+    </record>
+
+    <record id="action_dashboard_active_trips" model="ir.actions.act_window">
+        <field name="name">Active Trips</field>
+        <field name="res_model">transit.trip</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'dispatched')]</field>
+    </record>
+
+    <record id="action_dashboard_pending_trips" model="ir.actions.act_window">
+        <field name="name">Pending Trips</field>
+        <field name="res_model">transit.trip</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'draft')]</field>
+    </record>
+
+    <record id="action_dashboard_drivers_on_duty" model="ir.actions.act_window">
+        <field name="name">Drivers On Duty</field>
+        <field name="res_model">transit.driver</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('status', '=', 'on_trip')]</field>
+    </record>
+
+</odoo>
